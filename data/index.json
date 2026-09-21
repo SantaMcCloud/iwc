@@ -2642,7 +2642,7 @@
         "trsID": "#workflow/github.com/iwc-workflows/mgnify-amplicon-pipeline-v5-complete/main",
         "iwcID": "mgnify-amplicon-pipeline-v5-complete-main",
         "readme": "# MGnify's amplicon pipeline (v5.0)\n\n## Input datasets\n\n- **SRA accession list** a File listing the SRA accession IDs\n- **Clan information file** This file lists which models belong to the same clan `wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rfam_models/ribosomal_models/ribo.claninfo`\n- **Covariance models** `wget ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/pipeline-5.0/ref-dbs/rfam_models/ribosomal_models/ribo.cm`\n\n## Processing\n\nThis pipeline executes the following subworkflows:\n\n- **Quality control - single-end**\n- **Quality control - paired-end**\n- **rRNA-prediction** Classification and visualization of rRNA sequences based on SSUs and LSUs\n- **ITS** Classification and visualization of rRNA sequences based on ITS\n- **Summary tables** Generates taxonomic abundance summary tables\n",
-        "updated": "2026-09-07T00:00:00",
+        "updated": "2026-09-21T00:00:00",
         "categories": [
             "Amplicon sequence analysis",
             "Nucleic acid feature detection",
@@ -2698,7 +2698,7 @@
         "trsID": "#workflow/github.com/iwc-workflows/mgnify-amplicon-pipeline-v5-quality-control-paired-end/main",
         "iwcID": "mgnify-amplicon-pipeline-v5-quality-control-paired-end-main",
         "readme": "# MGnify's amplicon (v5.0) quality control subworkflow for paired end data\n\n## Input datasets\n\n- **Paired-end reads** a paired list collection containing the forward and reverse reads.\n\n## Input values\n\n- **fastp - Enable base correction** Enable base correction in overlapped regions, (Default = No)\n- **fastp - Qualified quality phred** The quality value that a base is qualified, (Default = 20)\n- **fastp - Unqualified percent limit** How many percents of bases are allowed to be unqualified, (Default = 20)\n- **fastp - Length required** Reads shorter than this value will be discarded, (Default = 70)\n- **Trimmomatic - SLIDINGWINDOW - Number of bases to average across** (Default = 4)\n- **Trimmomatic - SLIDINGWINDOW - Average quality required** (Default = 15)\n- **Trimmomatic - LEADING** Minimum quality required to keep a base, (Default = 3)\n- **Trimmomatic - TRAILING** Minimum quality required to keep a base, (Default = 3)\n- **Trimmomatic - MINLEN** Minimum length of reads to be kept, (Default = 100)\n- **Trimmomatic - Quality score encoding** The phred+64 encoding works the same as the phred+33 encoding, except you add 64 to the phred score to determine the ascii code of the quality character, (Default = Phred33)\n- **Length filtering - Minimum size** Minimum sequence length, (Default = 100)\n- **Ambiguity filtering - Maximal N percentage threshold to conserve sequences** Maximal N percentage threshold to conserve sequences, (Default = 10)\n\n## Processing\n\nThis subworkflow executes the following quality control steps:\n\n- **fastp** Quality and length filtering\n- **SeqPrep** Merges overlapping reads into a single longer reads using SeqPrep\n- **Trimmomatic** Filtering and trimming reads using trimmomatic\n- **Filter FASTQ** Filter reads shorter than 100 bp\n- **PRINSEQ** Ambiguity filtering\n",
-        "updated": "2026-09-07T00:00:00",
+        "updated": "2026-09-21T00:00:00",
         "categories": [
             "Amplicon sequence analysis",
             "Data filtering",
@@ -2827,7 +2827,7 @@
         "trsID": "#workflow/github.com/iwc-workflows/ploidy-aware-genotype-calling/main",
         "iwcID": "ploidy-aware-genotype-calling-main",
         "readme": "# Paired-End Variant and Ploidy-Aware Genotype Calling\n\nThis workflow performs paired-end reads quality control, mapping and germline\nvariant and genotype calling for organisms of any given ploidy.\n\nIt takes a collection of Illumina paired-end FASTQ files, a reference genome\nin FASTA format, a gene annotation in GTF format, and a ploidy parameter, and\nproduces annotated variants both as VCF and as a tab-separated table.\n\nReads are first quality- and adapter-trimmed with fastp. Trimmed reads\nare then mapped to the reference genome using BWA-MEM. The resulting\nalignments are filtered with Samtools view to retain only properly paired\nreads, and PCR duplicates are removed using Picard MarkDuplicates. QC metrics\nfrom fastp, Samtools stats, and MarkDuplicates are aggregated into a single\nMultiQC report.\n\nVariant and genotype calling is performed with FreeBayes, which operates in\nhaplotype-based mode on the duplicate-free BAM.\nThe ploidy assumed for calling is configurable and defaults to 2 (diploid).\n\nThe intial VCF output is normalised and left-aligned with bcftools norm,\nsplitting multi-allelic sites into individual biallelic records.\nVariants are then functionally annotated using SnpEff, with a custom SnpEff\ndatabase built on-the-fly from the provided reference FASTA and GTF annotation.\nAnnotation is restricted to coding and splicing effects (downstream,\nintergenic, intronic, UTR, and upstream effects are excluded). The annotated\nVCF is subsequently parsed with SnpSift Extract Fields into a flat tabular\nformat, and per-sample tables are merged into a single file.\n\n## Inputs\n\nPaired Collection: a list:paired dataset collection of Illumina paired-end\nreads in fastqsanger or fastqsanger.gz format.\n\nReference Genome FASTA: the reference genome sequence to use for mapping\nand variant calling.\n\nAnnotation GTF: a GTF gene annotation file corresponding to the reference\ngenome, used to build the SnpEff database.\n\nSet Ploidy for FreeBayes Variant Calling: an integer specifying the ploidy\nof the organism (default: 2).\n\n\n## Outputs\n\nFastp HTML report: per-sample HTML quality control report from fastp.\n\nPreprocessing and mapping MultiQC report: aggregated HTML QC report\ncombining fastp, Samtools stats, and Picard MarkDuplicates metrics across\nall samples.\n\nSnpEff annotated variants (VCF): annotated variants in VCF format, tagged VariantsasVCF.\n\nSnpEff HTML summary report: HTML summary statistics from SnpEff describing the\ndistribution of variant effects across functional categories.\n\nAnnotated variants table: a merged, tab-separated table of annotated variants\nacross all samples, tagged VariantsAsTSV. Columns include CHROM, POS,\nFILTER, REF, ALT, DP, AF, DP4, SB, and per-effect fields for\nimpact, functional class, effect type, gene name, codon change, amino acid\nchange, and transcript ID.\n",
-        "updated": "2026-09-07T00:00:00",
+        "updated": "2026-09-21T00:00:00",
         "categories": [
             "Genetic variation analysis",
             "Genome annotation",
@@ -3199,8 +3199,11 @@
         "categories": [
             "COVID-19",
             "Genetic variation analysis",
+            "Genome comparison",
             "ID mapping",
+            "Sequence annotation",
             "SNP annotation",
+            "Statistical calculation",
             "Variant classification",
             "Variant filtering",
             "Comparative genomics",
@@ -3216,7 +3219,8 @@
             "PDF",
             "SVG",
             "VCF",
-            "Plot"
+            "Plot",
+            "Variant call data"
         ],
         "collections": [
             "SARS-COV-2",
@@ -3604,7 +3608,7 @@
         "trsID": "#workflow/github.com/iwc-workflows/consensus-peaks/consensus-peaks-chip-sr",
         "iwcID": "consensus-peaks-consensus-peaks-chip-sr",
         "readme": "# Consensus Peak Calling for ChIP-seq, ATAC-seq and CUT&RUN Replicates\n\nThe goal of this workflow is to get a list of confident peaks with summits from n replicates.\n\n## Inputs dataset\n\n- The workflow needs a single input which is a list of datasets with n BAM where PCR duplicates have been removed (the workflow also works for nested list if you have multiple conditions each with multiple replicates).\n\n## Inputs values\n\n- Minimum number of overlap: Minimum number of replicates into which the final summit should be present.\n- effective_genome_size: this is used by MACS2 and may be entered manually (indications are provided for heavily used genomes).\n- bin_size: this is the bin sized used to compute the average of normalized profiles. Large values will allow to have a smaller output file but with less resolution while small values will increase computation time and size of the output file to produce a more resolutive bigwig.\n\n## Strategy summary\n\nHere is a generated example to highlight the strategy:\n![strategy](https://raw.githubusercontent.com/galaxyproject/iwc/main/workflows/epigenetics/consensus-peaks/strategy.png)\n\n## Processing\n\n- The workflow will:\n  - first part:\n    - call peaks and compute normalized coverage on each BAM individually\n    - average normalized profiles\n    - compute the intersection between all peaks and filter when at least x replicate overlaps\n  - second part:\n    - subset all BAM to get the same number of reads\n    - call peaks on all subsetted BAM combined\n  - finally, keep only peaks from the second part that have summits overlapping the filtered intersection of the first part.\n",
-        "updated": "2026-06-01T00:00:00",
+        "updated": "2026-09-18T00:00:00",
         "categories": [
             "Peak calling",
             "Read depth analysis",
@@ -3629,7 +3633,7 @@
         "trsID": "#workflow/github.com/iwc-workflows/consensus-peaks/consensus-peaks-chip-pe",
         "iwcID": "consensus-peaks-consensus-peaks-chip-pe",
         "readme": "# Consensus Peak Calling for ChIP-seq, ATAC-seq and CUT&RUN Replicates\n\nThe goal of this workflow is to get a list of confident peaks with summits from n replicates.\n\n## Inputs dataset\n\n- The workflow needs a single input which is a list of datasets with n BAM where PCR duplicates have been removed (the workflow also works for nested list if you have multiple conditions each with multiple replicates).\n\n## Inputs values\n\n- Minimum number of overlap: Minimum number of replicates into which the final summit should be present.\n- effective_genome_size: this is used by MACS2 and may be entered manually (indications are provided for heavily used genomes).\n- bin_size: this is the bin sized used to compute the average of normalized profiles. Large values will allow to have a smaller output file but with less resolution while small values will increase computation time and size of the output file to produce a more resolutive bigwig.\n\n## Strategy summary\n\nHere is a generated example to highlight the strategy:\n![strategy](https://raw.githubusercontent.com/galaxyproject/iwc/main/workflows/epigenetics/consensus-peaks/strategy.png)\n\n## Processing\n\n- The workflow will:\n  - first part:\n    - call peaks and compute normalized coverage on each BAM individually\n    - average normalized profiles\n    - compute the intersection between all peaks and filter when at least x replicate overlaps\n  - second part:\n    - subset all BAM to get the same number of reads\n    - call peaks on all subsetted BAM combined\n  - finally, keep only peaks from the second part that have summits overlapping the filtered intersection of the first part.\n",
-        "updated": "2026-06-01T00:00:00",
+        "updated": "2026-09-18T00:00:00",
         "categories": [
             "Peak calling",
             "Read depth analysis",
@@ -3653,7 +3657,7 @@
         "trsID": "#workflow/github.com/iwc-workflows/consensus-peaks/consensus-peaks-atac-cutandrun",
         "iwcID": "consensus-peaks-consensus-peaks-atac-cutandrun",
         "readme": "# Consensus Peak Calling for ChIP-seq, ATAC-seq and CUT&RUN Replicates\n\nThe goal of this workflow is to get a list of confident peaks with summits from n replicates.\n\n## Inputs dataset\n\n- The workflow needs a single input which is a list of datasets with n BAM where PCR duplicates have been removed (the workflow also works for nested list if you have multiple conditions each with multiple replicates).\n\n## Inputs values\n\n- Minimum number of overlap: Minimum number of replicates into which the final summit should be present.\n- effective_genome_size: this is used by MACS2 and may be entered manually (indications are provided for heavily used genomes).\n- bin_size: this is the bin sized used to compute the average of normalized profiles. Large values will allow to have a smaller output file but with less resolution while small values will increase computation time and size of the output file to produce a more resolutive bigwig.\n\n## Strategy summary\n\nHere is a generated example to highlight the strategy:\n![strategy](https://raw.githubusercontent.com/galaxyproject/iwc/main/workflows/epigenetics/consensus-peaks/strategy.png)\n\n## Processing\n\n- The workflow will:\n  - first part:\n    - call peaks and compute normalized coverage on each BAM individually\n    - average normalized profiles\n    - compute the intersection between all peaks and filter when at least x replicate overlaps\n  - second part:\n    - subset all BAM to get the same number of reads\n    - call peaks on all subsetted BAM combined\n  - finally, keep only peaks from the second part that have summits overlapping the filtered intersection of the first part.\n",
-        "updated": "2026-06-01T00:00:00",
+        "updated": "2026-09-18T00:00:00",
         "categories": [
             "Chromatin accessibility analysis",
             "Peak calling",
@@ -3679,7 +3683,7 @@
         "trsID": "#workflow/github.com/iwc-workflows/average-bigwig-between-replicates/main",
         "iwcID": "average-bigwig-between-replicates-main",
         "readme": "# BigWig Replicates Averaging Workflow\n\nThis workflow is very useful when you processed multiple samples in collections and you want to generate an average coverage per condition.\n\n## Inputs dataset\n\n- The workflow needs a single input which is a list of bigwigs (normalized). The identifiers of your bigwigs must be like:\n  - whatever_sample1_identificationOfReplicate1\n  - whatever_sample1_identificationOfReplicate2\n  - ...\n  - whatever_sample2_identificationOfReplicate1\n  - whatever_sample2_identificationOfReplicate2\n  - ...\n\n## Inputs values\n\n- bin_size: this is used when average of coverage is performed. Large values will allow to have smaller output files but with less resolution while small values will increase computation time and size of output files to produce more resolutive bigwigs. I suggest 5bp for RNA-seq and 50bp for other applications.\n\n## Processing\n\n- The workflow will split identifiers between everything which is before the last underscore which will be the *sample* and everything which is after the last underscore which will be the *replicate identifier*. And restructure the collection as list:list:\n  - whatever_sample1:\n    - identificationOfReplicate1\n    - identificationOfReplicate2\n    - ...\n  - whatever_sample2:\n    - identificationOfReplicate1\n    - identificationOfReplicate2\n    - ---\n  - ...\n- Then it will average bigwigs into each inner list\n\n## Outputs\n\n- The output is a collection of bigwig datasets like:\n  - whatever_sample1\n  - whatever_sample2\n  - ...\n",
-        "updated": "2023-09-27T00:00:00",
+        "updated": "2026-09-18T00:00:00",
         "categories": [
             "Aggregation",
             "Standardization and normalization",
