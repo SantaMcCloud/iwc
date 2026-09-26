@@ -298,7 +298,7 @@
                     "name": "input_param_type"
                 }
             ],
-            "label": "DAS Tool?",
+            "label": "Run DAS Tool?",
             "name": "Map parameter value",
             "outputs": [
                 {
