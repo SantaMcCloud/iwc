@@ -124,8 +124,8 @@
                     text: '>k141_274'
                 - has_text:
                     text: '>k141_549'
-        test_minigut:
-          Mock5:
+        Mock5:
+          elements:
             '001':
               asserts:
                 - has_text:
@@ -340,8 +340,8 @@
                     text: '>k141_274'
                 - has_text:
                     text: '>k141_549'
-        test_minigut:
-          Mock5:
+        Mock5:
+          elements:
             '001':
               asserts:
                 - has_text:
