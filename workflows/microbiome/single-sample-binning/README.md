@@ -7,7 +7,31 @@ After binning is complete, the workflow uses one or both of the available refine
 ## Inputs
 
 - Paired-end read collection
-- List of corresponding `Assembly(s)`
+  - quality-trimmed and host-removed
+- List of corresponding `Assemblies`
+  - assemblies element identifiers must match the read sample identifiers
+- Set if COMEBin should run or not
+  - It is recommend to use it but it can take a while since it is a ML based method
+- Set the read length for CONCOCT
+  - The read length is required by CONCOCT to accurately calculate contig coverage from mapped sequencing reads
+- Choose the bin refinement tool
+  - There are 3 options to choose: either run DAS Tool or/and Binette
+
+## Outputs
+
+- Bins from each binner
+- The refinement bins form the chosen bin refinement tool(s)
+- quality reports and/or summary files from the chosen bin refinement tool(s)
+
+## Why use this workflow
+
+This workflow provides a standardized and modular workflow for metagenomic binning that can be integrated into larger metagenomic analysis workflows. Its main purpose is to separate the binning step from other parts of MAG analysis, making complex workflows easier to understand, maintain, and adapt.
+
+Using binning as an independent workflow provides better control over the inputs, binning parameters, and outputs. It also allows users to reuse the same binning strategy in different analysis pipelines without having to include unnecessary upstream or downstream steps. This modular design is particularly useful when the generated bins are intended for a specific downstream analysis, such as taxonomic classification, genome annotation, functional analysis, or benchmarking.
+
+In contrast, the IWC Metagenome-Assembled Genomes (MAGs) generation workflow (https://iwc.galaxyproject.org/workflow/mags-building-main/) is designed as a comprehensive end-to-end solution. It performs metagenome assembly and multi-tool binning of paired short reads and optional long reads, followed by dereplication and analysis of MAG quality and abundance. This makes it well suited for users who want to generate and evaluate MAGs without requiring a specialized downstream workflow.
+
+The standard binning workflow should therefore be preferred when binning needs to be incorporated as one component of a larger or more specialized analysis. It reduces workflow complexity, improves the overview of individual analysis steps, and makes it easier to modify or replace downstream analyses independently.
 
 ## Workflow logic
 
