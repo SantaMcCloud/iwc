@@ -1,6 +1,6 @@
 {
     "a_galaxy_workflow": "true",
-    "annotation": "This workflow combines multiple binners, multi-sample binning, and bin refinement into one workflow. The main point is that it can be added to any larger workflow as a complete binning step. ",
+    "annotation": "This workflow performs multi-sample binning of metagenomic assemblies with CONCOCT, MaxBin2, MetaBAT2, SemiBin and optionally COMEBin, using cross-sample read coverage, and refines the bins with DAS Tool and/or Binette",
     "comments": [],
     "creator": [
         {
@@ -17,7 +17,7 @@
     "format-version": "0.1",
     "license": "MIT",
     "release": "1.0",
-    "name": "Multi-sample binning workflow",
+    "name": "Multi-sample binning",
     "report": {
         "markdown": "\n# Workflow Execution Report\n\n## Workflow Inputs\n```galaxy\ninvocation_inputs()\n```\n\n## Workflow Outputs\n```galaxy\ninvocation_outputs()\n```\n\n## Workflow\n```galaxy\nworkflow_display()\n```\n"
     },
@@ -31,15 +31,15 @@
             "inputs": [
                 {
                     "description": "Input reads that are used to create the assemblies.\n\n",
-                    "name": "Read"
+                    "name": "Paired-end reads"
                 }
             ],
-            "label": "Read",
+            "label": "Paired-end reads",
             "name": "Input dataset collection",
             "outputs": [],
             "position": {
                 "left": 0,
-                "top": 930
+                "top": 910
             },
             "tool_id": null,
             "tool_state": "{\"optional\": false, \"tag\": null, \"collection_type\": \"list:paired\", \"fields\": null, \"column_definitions\": null}",
@@ -66,7 +66,7 @@
             "outputs": [],
             "position": {
                 "left": 600,
-                "top": 790
+                "top": 770
             },
             "tool_id": null,
             "tool_state": "{\"optional\": false, \"tag\": null, \"collection_type\": \"list\", \"fields\": null, \"column_definitions\": null}",
@@ -96,7 +96,7 @@
                 "top": 460
             },
             "tool_id": null,
-            "tool_state": "{\"validators\": [], \"parameter_type\": \"boolean\", \"optional\": false}",
+            "tool_state": "{\"default\": true, \"validators\": [], \"parameter_type\": \"boolean\", \"optional\": false}",
             "tool_version": null,
             "type": "parameter_input",
             "uuid": "875c3765-81ca-42a2-a8af-9eea17a90ac8",
@@ -139,10 +139,10 @@
             "inputs": [
                 {
                     "description": "Choose between DAS Tool and/or Binette to run as a refinement step.\n\n",
-                    "name": "Bin refirment tool"
+                    "name": "Bin refinement tool"
                 }
             ],
-            "label": "Bin refirment tool",
+            "label": "Bin refinement tool",
             "name": "Input parameter",
             "outputs": [],
             "position": {
@@ -150,7 +150,7 @@
                 "top": 0
             },
             "tool_id": null,
-            "tool_state": "{\"multiple\": false, \"validators\": [], \"restrictions\": [\"DAS Tool\", \"Binette\", \"both\"], \"parameter_type\": \"text\", \"optional\": false}",
+            "tool_state": "{\"multiple\": false, \"validators\": [], \"restrictions\": [\"DAS Tool\", \"Binette\", \"Both\"], \"parameter_type\": \"text\", \"optional\": false}",
             "tool_version": null,
             "type": "parameter_input",
             "uuid": "29651e13-0037-4477-a4d3-d8751fd97aa4",
@@ -158,10 +158,37 @@
             "workflow_outputs": []
         },
         "5": {
+            "annotation": "CheckM2 Reference Database used for quality assessment for Binette, dRep, and  quality assessment of the final bins",
+            "content_id": null,
+            "errors": null,
+            "id": 5,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "CheckM2 Reference Database used for quality assessment for Binette, dRep, and  quality assessment of the final bins",
+                    "name": "CheckM2 Database"
+                }
+            ],
+            "label": "CheckM2 Database",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 4450,
+                "top": 1470
+            },
+            "tool_id": null,
+            "tool_state": "{\"multiple\": false, \"validators\": [], \"restrictOnConnections\": true, \"parameter_type\": \"text\", \"optional\": false}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "8cef62db-3352-4d17-9a00-f3de3a9990a8",
+            "when": null,
+            "workflow_outputs": []
+        },
+        "6": {
             "annotation": "",
             "content_id": "__UNZIP_COLLECTION__",
             "errors": null,
-            "id": 5,
+            "id": 6,
             "input_connections": {
                 "input": {
                     "id": 0,
@@ -169,7 +196,7 @@
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "Unzip reads",
             "name": "Unzip collection",
             "outputs": [
                 {
@@ -183,7 +210,7 @@
             ],
             "position": {
                 "left": 300,
-                "top": 930
+                "top": 910
             },
             "post_job_actions": {},
             "tool_id": "__UNZIP_COLLECTION__",
@@ -195,11 +222,11 @@
             "when": null,
             "workflow_outputs": []
         },
-        "6": {
+        "7": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/concoct_cut_up_fasta/concoct_cut_up_fasta/1.1.0+galaxy3",
             "errors": null,
-            "id": 6,
+            "id": 7,
             "input_connections": {
                 "input_fasta": {
                     "id": 1,
@@ -207,7 +234,7 @@
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "CONCOCT: Cut up contigs",
             "name": "CONCOCT: Cut up contigs",
             "outputs": [
                 {
@@ -239,11 +266,11 @@
             "when": null,
             "workflow_outputs": []
         },
-        "7": {
+        "8": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/map_param_value/map_param_value/0.2.0",
             "errors": null,
-            "id": 7,
+            "id": 8,
             "input_connections": {
                 "input_param_type|input_param": {
                     "id": 4,
@@ -256,7 +283,7 @@
                     "name": "input_param_type"
                 }
             ],
-            "label": "DAS Tool only or both should run",
+            "label": "Run DAS Tool?",
             "name": "Map parameter value",
             "outputs": [
                 {
@@ -284,11 +311,11 @@
             "when": null,
             "workflow_outputs": []
         },
-        "8": {
+        "9": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/map_param_value/map_param_value/0.2.0",
             "errors": null,
-            "id": 8,
+            "id": 9,
             "input_connections": {
                 "input_param_type|input_param": {
                     "id": 4,
@@ -301,7 +328,7 @@
                     "name": "input_param_type"
                 }
             ],
-            "label": "Binette only or both should run",
+            "label": "Run Binette? ",
             "name": "Map parameter value",
             "outputs": [
                 {
@@ -311,7 +338,7 @@
             ],
             "position": {
                 "left": 3850,
-                "top": 290
+                "top": 260
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/map_param_value/map_param_value/0.2.0",
@@ -321,7 +348,7 @@
                 "owner": "iuc",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"input_param_type\": {\"type\": \"text\", \"__current_case__\": 0, \"input_param\": {\"__class__\": \"ConnectedValue\"}, \"mappings\": [{\"__index__\": 0, \"from\": \"Both\", \"to\": \"True\"}, {\"__index__\": 1, \"from\": \"Binette\", \"to\": \"True\"}, {\"__index__\": 2, \"from\": \"DAS Tool\", \"to\": \"False\"}]}, \"output_param_type\": \"boolean\", \"unmapped\": {\"on_unmapped\": \"input\", \"__current_case__\": 0}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_state": "{\"input_param_type\": {\"type\": \"text\", \"__current_case__\": 0, \"input_param\": {\"__class__\": \"ConnectedValue\"}, \"mappings\": [{\"__index__\": 0, \"from\": \"Both\", \"to\": \"True\"}, {\"__index__\": 1, \"from\": \"Binette\", \"to\": \"True\"}, {\"__index__\": 2, \"from\": \"DAS Tool\", \"to\": \"False\"}]}, \"output_param_type\": \"boolean\", \"unmapped\": {\"on_unmapped\": \"default\", \"__current_case__\": 2, \"default_value\": \"False\"}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
             "tool_uuid": null,
             "tool_version": "0.2.0",
             "type": "tool",
@@ -329,23 +356,23 @@
             "when": null,
             "workflow_outputs": []
         },
-        "9": {
+        "10": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/seqtk/seqtk_mergepe/1.5+galaxy0",
             "errors": null,
-            "id": 9,
+            "id": 10,
             "input_connections": {
                 "in_fq1": {
-                    "id": 5,
+                    "id": 6,
                     "output_name": "forward"
                 },
                 "in_fq2": {
-                    "id": 5,
+                    "id": 6,
                     "output_name": "reverse"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "seqtk_mergepe reads",
             "name": "seqtk_mergepe",
             "outputs": [
                 {
@@ -355,7 +382,7 @@
             ],
             "position": {
                 "left": 600,
-                "top": 930
+                "top": 910
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/seqtk/seqtk_mergepe/1.5+galaxy0",
@@ -373,23 +400,23 @@
             "when": null,
             "workflow_outputs": []
         },
-        "10": {
+        "11": {
             "annotation": "",
             "content_id": "__CROSS_PRODUCT_NESTED__",
             "errors": null,
-            "id": 10,
+            "id": 11,
             "input_connections": {
                 "input_a": {
                     "id": 1,
                     "output_name": "output"
                 },
                 "input_b": {
-                    "id": 9,
+                    "id": 10,
                     "output_name": "default"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "create nested cross product from read to assamblies",
             "name": "Nested Cross Product",
             "outputs": [
                 {
@@ -403,7 +430,7 @@
             ],
             "position": {
                 "left": 900,
-                "top": 910
+                "top": 890
             },
             "post_job_actions": {},
             "tool_id": "__CROSS_PRODUCT_NESTED__",
@@ -415,19 +442,19 @@
             "when": null,
             "workflow_outputs": []
         },
-        "11": {
+        "12": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/fastq_paired_end_deinterlacer/fastq_paired_end_deinterlacer/1.1.5+galaxy2",
             "errors": null,
-            "id": 11,
+            "id": 12,
             "input_connections": {
                 "input_file": {
-                    "id": 10,
+                    "id": 11,
                     "output_name": "output_b"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "FASTQ de-interlacer reads",
             "name": "FASTQ de-interlacer",
             "outputs": [
                 {
@@ -449,7 +476,7 @@
             ],
             "position": {
                 "left": 1200,
-                "top": 570
+                "top": 550
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/fastq_paired_end_deinterlacer/fastq_paired_end_deinterlacer/1.1.5+galaxy2",
@@ -467,23 +494,23 @@
             "when": null,
             "workflow_outputs": []
         },
-        "12": {
+        "13": {
             "annotation": "",
             "content_id": "__ZIP_COLLECTION__",
             "errors": null,
-            "id": 12,
+            "id": 13,
             "input_connections": {
                 "input_forward": {
-                    "id": 11,
+                    "id": 12,
                     "output_name": "output1_pairs_file"
                 },
                 "input_reverse": {
-                    "id": 11,
+                    "id": 12,
                     "output_name": "output2_pairs_file"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "zip reads back together",
             "name": "Zip collections",
             "outputs": [
                 {
@@ -493,7 +520,7 @@
             ],
             "position": {
                 "left": 1500,
-                "top": 570
+                "top": 550
             },
             "post_job_actions": {},
             "tool_id": "__ZIP_COLLECTION__",
@@ -505,18 +532,18 @@
             "when": null,
             "workflow_outputs": []
         },
-        "13": {
+        "14": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/bowtie2/bowtie2/2.5.5+galaxy0",
             "errors": null,
-            "id": 13,
+            "id": 14,
             "input_connections": {
                 "library|input_1": {
-                    "id": 12,
+                    "id": 13,
                     "output_name": "output"
                 },
                 "reference_genome|own_file": {
-                    "id": 10,
+                    "id": 11,
                     "output_name": "output_a"
                 }
             },
@@ -530,7 +557,7 @@
                     "name": "reference_genome"
                 }
             ],
-            "label": null,
+            "label": "Bowtie2",
             "name": "Bowtie2",
             "outputs": [
                 {
@@ -540,7 +567,7 @@
             ],
             "position": {
                 "left": 1800,
-                "top": 890
+                "top": 870
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/bowtie2/bowtie2/2.5.5+galaxy0",
@@ -558,19 +585,19 @@
             "when": null,
             "workflow_outputs": []
         },
-        "14": {
+        "15": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/samtools_sort/samtools_sort/2.0.8",
             "errors": null,
-            "id": 14,
+            "id": 15,
             "input_connections": {
                 "input1": {
-                    "id": 13,
+                    "id": 14,
                     "output_name": "output"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "Sort with samtools sort",
             "name": "Samtools sort",
             "outputs": [
                 {
@@ -580,7 +607,7 @@
             ],
             "position": {
                 "left": 2100,
-                "top": 890
+                "top": 870
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/samtools_sort/samtools_sort/2.0.8",
@@ -598,18 +625,18 @@
             "when": null,
             "workflow_outputs": []
         },
-        "15": {
+        "16": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/concoct_coverage_table/concoct_coverage_table/1.1.0+galaxy3",
             "errors": null,
-            "id": 15,
+            "id": 16,
             "input_connections": {
                 "bedfile": {
-                    "id": 6,
+                    "id": 7,
                     "output_name": "output_bed"
                 },
                 "mode|bamfiles": {
-                    "id": 14,
+                    "id": 15,
                     "output_name": "output1"
                 }
             },
@@ -619,7 +646,7 @@
                     "name": "mode"
                 }
             ],
-            "label": null,
+            "label": "CONCOCT: Generate the input coverage table",
             "name": "CONCOCT: Generate the input coverage table",
             "outputs": [
                 {
@@ -647,18 +674,18 @@
             "when": null,
             "workflow_outputs": []
         },
-        "16": {
+        "17": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/comebin/comebin/1.1.0+galaxy0",
             "errors": null,
-            "id": 16,
+            "id": 17,
             "input_connections": {
                 "assembly_file": {
                     "id": 1,
                     "output_name": "output"
                 },
                 "bam_files": {
-                    "id": 14,
+                    "id": 15,
                     "output_name": "output1"
                 },
                 "when": {
@@ -667,7 +694,7 @@
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "COMEBin",
             "name": "COMEBin",
             "outputs": [
                 {
@@ -709,14 +736,14 @@
                 }
             ]
         },
-        "17": {
+        "18": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/metabat2_jgi_summarize_bam_contig_depths/metabat2_jgi_summarize_bam_contig_depths/2.18.23+galaxy0",
             "errors": null,
-            "id": 17,
+            "id": 18,
             "input_connections": {
                 "mode|bam_co_inputs": {
-                    "id": 14,
+                    "id": 15,
                     "output_name": "output1"
                 }
             },
@@ -754,14 +781,14 @@
             "when": null,
             "workflow_outputs": []
         },
-        "18": {
+        "19": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/semibin/semibin/2.1.0+galaxy1",
             "errors": null,
-            "id": 18,
+            "id": 19,
             "input_connections": {
                 "mode|align_select|input_bam": {
-                    "id": 14,
+                    "id": 15,
                     "output_name": "output1"
                 },
                 "mode|input_fasta": {
@@ -775,7 +802,7 @@
                     "name": "mode"
                 }
             ],
-            "label": null,
+            "label": "SemiBin",
             "name": "SemiBin",
             "outputs": [
                 {
@@ -817,22 +844,22 @@
                 }
             ]
         },
-        "19": {
+        "20": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/concoct/concoct/1.1.0+galaxy3",
             "errors": null,
-            "id": 19,
+            "id": 20,
             "input_connections": {
                 "advanced|read_length": {
                     "id": 3,
                     "output_name": "output"
                 },
                 "composition_file": {
-                    "id": 6,
+                    "id": 7,
                     "output_name": "output_fasta"
                 },
                 "coverage_file": {
-                    "id": 15,
+                    "id": 16,
                     "output_name": "output"
                 }
             },
@@ -842,7 +869,7 @@
                     "name": "advanced"
                 }
             ],
-            "label": null,
+            "label": "CONCOCT",
             "name": "CONCOCT",
             "outputs": [
                 {
@@ -878,19 +905,19 @@
             "when": null,
             "workflow_outputs": []
         },
-        "20": {
+        "21": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_to_contig2bin/Fasta_to_Contig2Bin/1.1.7+galaxy1",
             "errors": null,
-            "id": 20,
+            "id": 21,
             "input_connections": {
                 "inputs": {
-                    "id": 16,
+                    "id": 17,
                     "output_name": "bins"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "generate genome bins table from COMEBin",
             "name": "Converts genome bins in fasta format",
             "outputs": [
                 {
@@ -900,7 +927,7 @@
             ],
             "position": {
                 "left": 3850,
-                "top": 670
+                "top": 660
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_to_contig2bin/Fasta_to_Contig2Bin/1.1.7+galaxy1",
@@ -918,14 +945,14 @@
             "when": null,
             "workflow_outputs": []
         },
-        "21": {
+        "22": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/metabat2/metabat2/2.18.23+galaxy0",
             "errors": null,
-            "id": 21,
+            "id": 22,
             "input_connections": {
                 "advanced|base_coverage_depth_cond|abdFile": {
-                    "id": 17,
+                    "id": 18,
                     "output_name": "outputDepth"
                 },
                 "inFile": {
@@ -934,7 +961,7 @@
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "MetaBAT2",
             "name": "MetaBAT2",
             "outputs": [
                 {
@@ -944,7 +971,7 @@
             ],
             "position": {
                 "left": 2900,
-                "top": 720
+                "top": 730
             },
             "post_job_actions": {
                 "TagDatasetActionbins": {
@@ -976,14 +1003,14 @@
                 }
             ]
         },
-        "22": {
+        "23": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/mbernt/maxbin2/maxbin2/2.2.7+galaxy6",
             "errors": null,
-            "id": 22,
+            "id": 23,
             "input_connections": {
                 "assembly|inputs|abund": {
-                    "id": 17,
+                    "id": 18,
                     "output_name": "outputDepth"
                 },
                 "contig": {
@@ -992,7 +1019,7 @@
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "MaxBin2",
             "name": "MaxBin2",
             "outputs": [
                 {
@@ -1014,7 +1041,7 @@
             ],
             "position": {
                 "left": 2900,
-                "top": 1030
+                "top": 1040
             },
             "post_job_actions": {
                 "TagDatasetActionbins": {
@@ -1046,19 +1073,19 @@
                 }
             ]
         },
-        "23": {
+        "24": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_to_contig2bin/Fasta_to_Contig2Bin/1.1.7+galaxy1",
             "errors": null,
-            "id": 23,
+            "id": 24,
             "input_connections": {
                 "inputs": {
-                    "id": 18,
+                    "id": 19,
                     "output_name": "output_bins"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "generate genome bins table from SemiBin",
             "name": "Converts genome bins in fasta format",
             "outputs": [
                 {
@@ -1068,7 +1095,7 @@
             ],
             "position": {
                 "left": 3850,
-                "top": 1240
+                "top": 1230
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_to_contig2bin/Fasta_to_Contig2Bin/1.1.7+galaxy1",
@@ -1086,19 +1113,19 @@
             "when": null,
             "workflow_outputs": []
         },
-        "24": {
+        "25": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/concoct_merge_cut_up_clustering/concoct_merge_cut_up_clustering/1.1.0+galaxy3",
             "errors": null,
-            "id": 24,
+            "id": 25,
             "input_connections": {
                 "cutup_clustering_result": {
-                    "id": 19,
+                    "id": 20,
                     "output_name": "output_clustering"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "CONCOCT: Merge cut clusters",
             "name": "CONCOCT: Merge cut clusters",
             "outputs": [
                 {
@@ -1126,19 +1153,19 @@
             "when": null,
             "workflow_outputs": []
         },
-        "25": {
+        "26": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_to_contig2bin/Fasta_to_Contig2Bin/1.1.7+galaxy1",
             "errors": null,
-            "id": 25,
+            "id": 26,
             "input_connections": {
                 "inputs": {
-                    "id": 21,
+                    "id": 22,
                     "output_name": "bins"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "generate genome bins table from MetaBAT2",
             "name": "Converts genome bins in fasta format",
             "outputs": [
                 {
@@ -1148,7 +1175,7 @@
             ],
             "position": {
                 "left": 3850,
-                "top": 840
+                "top": 850
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_to_contig2bin/Fasta_to_Contig2Bin/1.1.7+galaxy1",
@@ -1166,19 +1193,19 @@
             "when": null,
             "workflow_outputs": []
         },
-        "26": {
+        "27": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_to_contig2bin/Fasta_to_Contig2Bin/1.1.7+galaxy1",
             "errors": null,
-            "id": 26,
+            "id": 27,
             "input_connections": {
                 "inputs": {
-                    "id": 22,
+                    "id": 23,
                     "output_name": "bins"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "generate genome bins table from MaxBin2",
             "name": "Converts genome bins in fasta format",
             "outputs": [
                 {
@@ -1188,7 +1215,7 @@
             ],
             "position": {
                 "left": 3850,
-                "top": 1030
+                "top": 1040
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_to_contig2bin/Fasta_to_Contig2Bin/1.1.7+galaxy1",
@@ -1206,14 +1233,14 @@
             "when": null,
             "workflow_outputs": []
         },
-        "27": {
+        "28": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/concoct_extract_fasta_bins/concoct_extract_fasta_bins/1.1.0+galaxy3",
             "errors": null,
-            "id": 27,
+            "id": 28,
             "input_connections": {
                 "cluster_file": {
-                    "id": 24,
+                    "id": 25,
                     "output_name": "output"
                 },
                 "fasta_file": {
@@ -1222,7 +1249,7 @@
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "CONCOCT: Extract a fasta file",
             "name": "CONCOCT: Extract a fasta file",
             "outputs": [
                 {
@@ -1264,19 +1291,19 @@
                 }
             ]
         },
-        "28": {
+        "29": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_to_contig2bin/Fasta_to_Contig2Bin/1.1.7+galaxy1",
             "errors": null,
-            "id": 28,
+            "id": 29,
             "input_connections": {
                 "inputs": {
-                    "id": 27,
+                    "id": 28,
                     "output_name": "bins"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "generate genome bins table from CONCOCT",
             "name": "Converts genome bins in fasta format",
             "outputs": [
                 {
@@ -1286,7 +1313,7 @@
             ],
             "position": {
                 "left": 3850,
-                "top": 500
+                "top": 470
             },
             "post_job_actions": {},
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/fasta_to_contig2bin/Fasta_to_Contig2Bin/1.1.7+galaxy1",
@@ -1304,30 +1331,30 @@
             "when": null,
             "workflow_outputs": []
         },
-        "29": {
+        "30": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/das_tool/das_tool/1.1.7+galaxy1",
             "errors": null,
-            "id": 29,
+            "id": 30,
             "input_connections": {
                 "binning_0|bins": {
-                    "id": 28,
+                    "id": 29,
                     "output_name": "contigs2bin"
                 },
                 "binning_1|bins": {
-                    "id": 20,
+                    "id": 21,
                     "output_name": "contigs2bin"
                 },
                 "binning_2|bins": {
-                    "id": 25,
-                    "output_name": "contigs2bin"
-                },
-                "binning_3|bins": {
                     "id": 26,
                     "output_name": "contigs2bin"
                 },
+                "binning_3|bins": {
+                    "id": 27,
+                    "output_name": "contigs2bin"
+                },
                 "binning_4|bins": {
-                    "id": 23,
+                    "id": 24,
                     "output_name": "contigs2bin"
                 },
                 "contigs": {
@@ -1335,7 +1362,7 @@
                     "output_name": "output"
                 },
                 "when": {
-                    "id": 7,
+                    "id": 8,
                     "output_name": "output_param_boolean"
                 }
             },
@@ -1345,7 +1372,7 @@
                     "name": "adv"
                 }
             ],
-            "label": null,
+            "label": "DAS Tool",
             "name": "DAS Tool",
             "outputs": [
                 {
@@ -1366,8 +1393,8 @@
                 }
             ],
             "position": {
-                "left": 4400,
-                "top": 340
+                "left": 4450,
+                "top": 310
             },
             "post_job_actions": {
                 "TagDatasetActionbins": {
@@ -1376,6 +1403,20 @@
                     },
                     "action_type": "TagDatasetAction",
                     "output_name": "bins"
+                },
+                "TagDatasetActioncontigs2bin": {
+                    "action_arguments": {
+                        "tags": "das-tool-conitgs2bin-report"
+                    },
+                    "action_type": "TagDatasetAction",
+                    "output_name": "contigs2bin"
+                },
+                "TagDatasetActionsummary": {
+                    "action_arguments": {
+                        "tags": "das-tool-summary"
+                    },
+                    "action_type": "TagDatasetAction",
+                    "output_name": "summary"
                 }
             },
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/das_tool/das_tool/1.1.7+galaxy1",
@@ -1393,45 +1434,55 @@
             "when": "$(inputs.when)",
             "workflow_outputs": [
                 {
+                    "label": "DAS Tool contigs2bin report",
+                    "output_name": "contigs2bin",
+                    "uuid": "6e55e68d-96e7-4898-b6ae-f1110ea764a8"
+                },
+                {
                     "label": "DAS Tool bins",
                     "output_name": "bins",
                     "uuid": "f6517089-9d22-4513-97e1-4268a3ad2766"
+                },
+                {
+                    "label": "DAS Tool summary",
+                    "output_name": "summary",
+                    "uuid": "47867014-9b39-493e-8aac-5350afa6792f"
                 }
             ]
         },
-        "30": {
+        "31": {
             "annotation": "",
             "content_id": "__BUILD_LIST__",
             "errors": null,
-            "id": 30,
+            "id": 31,
             "input_connections": {
                 "datasets_0|input": {
-                    "id": 28,
+                    "id": 29,
                     "output_name": "contigs2bin"
                 },
                 "datasets_1|input": {
-                    "id": 20,
+                    "id": 21,
                     "output_name": "contigs2bin"
                 },
                 "datasets_2|input": {
-                    "id": 25,
-                    "output_name": "contigs2bin"
-                },
-                "datasets_3|input": {
                     "id": 26,
                     "output_name": "contigs2bin"
                 },
+                "datasets_3|input": {
+                    "id": 27,
+                    "output_name": "contigs2bin"
+                },
                 "datasets_4|input": {
-                    "id": 23,
+                    "id": 24,
                     "output_name": "contigs2bin"
                 },
                 "when": {
-                    "id": 8,
+                    "id": 9,
                     "output_name": "output_param_boolean"
                 }
             },
             "inputs": [],
-            "label": null,
+            "label": "Build genome bins list for Binette",
             "name": "Build list",
             "outputs": [
                 {
@@ -1440,8 +1491,8 @@
                 }
             ],
             "position": {
-                "left": 4400,
-                "top": 920
+                "left": 4450,
+                "top": 1010
             },
             "post_job_actions": {},
             "tool_id": "__BUILD_LIST__",
@@ -1453,32 +1504,48 @@
             "when": "$(inputs.when)",
             "workflow_outputs": []
         },
-        "31": {
+        "32": {
             "annotation": "",
             "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/binette/binette/1.2.1+galaxy0",
             "errors": null,
-            "id": 31,
+            "id": 32,
             "input_connections": {
                 "contig2bin_tables": {
-                    "id": 30,
+                    "id": 31,
                     "output_name": "output"
                 },
                 "contigs": {
                     "id": 1,
                     "output_name": "output"
                 },
+                "database_type|datamanager": {
+                    "id": 5,
+                    "output_name": "output"
+                },
                 "when": {
-                    "id": 8,
+                    "id": 9,
                     "output_name": "output_param_boolean"
                 }
             },
             "inputs": [
                 {
                     "description": "runtime parameter for tool Binette",
+                    "name": "contig2bin_tables"
+                },
+                {
+                    "description": "runtime parameter for tool Binette",
+                    "name": "contigs"
+                },
+                {
+                    "description": "runtime parameter for tool Binette",
+                    "name": "database_type"
+                },
+                {
+                    "description": "runtime parameter for tool Binette",
                     "name": "proteins"
                 }
             ],
-            "label": null,
+            "label": "Binette",
             "name": "Binette",
             "outputs": [
                 {
@@ -1495,8 +1562,8 @@
                 }
             ],
             "position": {
-                "left": 4700,
-                "top": 900
+                "left": 4800,
+                "top": 990
             },
             "post_job_actions": {
                 "TagDatasetActionbins": {
@@ -1505,6 +1572,13 @@
                     },
                     "action_type": "TagDatasetAction",
                     "output_name": "bins"
+                },
+                "TagDatasetActionquality": {
+                    "action_arguments": {
+                        "tags": "binette-quality-reports"
+                    },
+                    "action_type": "TagDatasetAction",
+                    "output_name": "quality"
                 }
             },
             "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/binette/binette/1.2.1+galaxy0",
@@ -1514,7 +1588,7 @@
                 "owner": "iuc",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"contamination_weight\": \"2\", \"contig2bin_tables\": {\"__class__\": \"ConnectedValue\"}, \"contigs\": {\"__class__\": \"ConnectedValue\"}, \"database_type\": {\"is_select\": \"cached\", \"__current_case__\": 1, \"datamanager\": \"1.0.2\"}, \"min_completeness\": \"40\", \"proteins\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_state": "{\"contamination_weight\": \"2\", \"contig2bin_tables\": {\"__class__\": \"RuntimeValue\"}, \"contigs\": {\"__class__\": \"RuntimeValue\"}, \"database_type\": {\"is_select\": \"cached\", \"__current_case__\": 1, \"datamanager\": {\"__class__\": \"ConnectedValue\"}}, \"min_completeness\": \"40\", \"proteins\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
             "tool_uuid": null,
             "tool_version": "1.2.1+galaxy0",
             "type": "tool",
@@ -1525,11 +1599,16 @@
                     "label": "Binette bins",
                     "output_name": "bins",
                     "uuid": "78d973e2-680e-4541-9920-4a08489125da"
+                },
+                {
+                    "label": "Binette quality reports",
+                    "output_name": "quality",
+                    "uuid": "2d4d323d-acf9-4c87-b120-117affa4abcb"
                 }
             ]
         }
     },
     "tags": [],
-    "uuid": "822828bd-06ff-4681-b93d-d1029dd8fcca",
-    "version": 5
+    "uuid": "e965dfaa-110c-40d4-b141-0bffd0d5fee7",
+    "version": 1
 }

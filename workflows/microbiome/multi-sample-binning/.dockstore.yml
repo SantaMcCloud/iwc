@@ -3,9 +3,9 @@ workflows:
 - name: main
   subclass: Galaxy
   publish: true
-  primaryDescriptorPath: /Multi-sample-binning-workflow.ga
+  primaryDescriptorPath: /multi-sample-binning.ga
   testParameterFiles:
-  - /Multi-sample-binning-workflow-tests.yml
+  - /multi-sample-binning-tests.yml
   authors:
   - name: Santino Faack
     orcid: 0009-0004-0382-2023
