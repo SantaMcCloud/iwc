@@ -1423,7 +1423,7 @@
             "when": "$(inputs.when)",
             "workflow_outputs": [
                 {
-                    "label": "Binette prebinette quality reports",
+                    "label": "Binette pre quality reports",
                     "output_name": "quality",
                     "uuid": "eacc6f73-7d8f-477a-9027-3632aaa7ee27"
                 },
