@@ -1,6 +1,6 @@
 - doc: Test for multi-sample-binning (Binette only)
   job:
-    Read:
+    Paired-end reads:
       class: Collection
       collection_type: list:paired
       elements:
@@ -75,7 +75,7 @@
         location: https://zenodo.org/records/22982485/files/Mock5.fasta
     Run COMEBin: true
     Read length (CONCOCT): 100
-    Bin refirment tool: Binette
+    Bin refinement tool: Binette
     CheckM2 Database: 1.0.2
   outputs:
     SemiBin bins:
@@ -216,7 +216,7 @@
                 delta: 1
 - doc: Test for multi-sample-binning (DAS Tool only)
   job:
-    Read:
+    Paired-end reads:
       class: Collection
       collection_type: list:paired
       elements:
@@ -291,7 +291,7 @@
         location: https://zenodo.org/records/22982485/files/Mock5.fasta
     Run COMEBin: false
     Read length (CONCOCT): 100
-    Bin refirment tool: DAS Tool
+    Bin refinement tool: DAS Tool
     CheckM2 Database: 1.0.2
   outputs:
     SemiBin bins:
