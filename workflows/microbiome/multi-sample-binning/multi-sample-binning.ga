@@ -1434,14 +1434,14 @@
             "when": "$(inputs.when)",
             "workflow_outputs": [
                 {
-                    "label": "DAS Tool contigs2bin report",
-                    "output_name": "contigs2bin",
-                    "uuid": "6e55e68d-96e7-4898-b6ae-f1110ea764a8"
-                },
-                {
                     "label": "DAS Tool bins",
                     "output_name": "bins",
                     "uuid": "f6517089-9d22-4513-97e1-4268a3ad2766"
+                },
+                {
+                    "label": "DAS Tool contigs2bin report",
+                    "output_name": "contigs2bin",
+                    "uuid": "6e55e68d-96e7-4898-b6ae-f1110ea764a8"
                 },
                 {
                     "label": "DAS Tool summary",
@@ -1530,14 +1530,6 @@
             "inputs": [
                 {
                     "description": "runtime parameter for tool Binette",
-                    "name": "contig2bin_tables"
-                },
-                {
-                    "description": "runtime parameter for tool Binette",
-                    "name": "contigs"
-                },
-                {
-                    "description": "runtime parameter for tool Binette",
                     "name": "database_type"
                 },
                 {
@@ -1573,9 +1565,16 @@
                     "action_type": "TagDatasetAction",
                     "output_name": "bins"
                 },
+                "TagDatasetActionfinal": {
+                    "action_arguments": {
+                        "tags": "binette-post-quality-reports"
+                    },
+                    "action_type": "TagDatasetAction",
+                    "output_name": "final"
+                },
                 "TagDatasetActionquality": {
                     "action_arguments": {
-                        "tags": "binette-quality-reports"
+                        "tags": "binette-pre-quality-reports"
                     },
                     "action_type": "TagDatasetAction",
                     "output_name": "quality"
@@ -1588,7 +1587,7 @@
                 "owner": "iuc",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"contamination_weight\": \"2\", \"contig2bin_tables\": {\"__class__\": \"RuntimeValue\"}, \"contigs\": {\"__class__\": \"RuntimeValue\"}, \"database_type\": {\"is_select\": \"cached\", \"__current_case__\": 1, \"datamanager\": {\"__class__\": \"ConnectedValue\"}}, \"min_completeness\": \"40\", \"proteins\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_state": "{\"contamination_weight\": \"2\", \"contig2bin_tables\": {\"__class__\": \"ConnectedValue\"}, \"contigs\": {\"__class__\": \"ConnectedValue\"}, \"database_type\": {\"is_select\": \"cached\", \"__current_case__\": 1, \"datamanager\": {\"__class__\": \"ConnectedValue\"}}, \"min_completeness\": \"40\", \"proteins\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
             "tool_uuid": null,
             "tool_version": "1.2.1+galaxy0",
             "type": "tool",
@@ -1596,19 +1595,24 @@
             "when": "$(inputs.when)",
             "workflow_outputs": [
                 {
+                    "label": "Binette pre quality reports",
+                    "output_name": "quality",
+                    "uuid": "99e64da5-8e80-4eb9-a931-289055ec717e"
+                },
+                {
                     "label": "Binette bins",
                     "output_name": "bins",
                     "uuid": "78d973e2-680e-4541-9920-4a08489125da"
                 },
                 {
-                    "label": "Binette quality reports",
-                    "output_name": "quality",
-                    "uuid": "2d4d323d-acf9-4c87-b120-117affa4abcb"
+                    "label": "Binette post quality reports",
+                    "output_name": "final",
+                    "uuid": "a10382ed-1d4b-45ad-89b5-79cd5041ec66"
                 }
             ]
         }
     },
     "tags": [],
-    "uuid": "e965dfaa-110c-40d4-b141-0bffd0d5fee7",
+    "uuid": "a4229b4f-c90e-45a7-8447-9e60bc801a7d",
     "version": 1
 }
