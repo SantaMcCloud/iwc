@@ -103,7 +103,7 @@
             '1':
               asserts:
                 - has_text:
-                    text: '>k141_1646'
+                    text: '>k141_1149'
                 - has_text:
                     text: '>k141_2194'
         Mock5:
@@ -124,8 +124,8 @@
                     text: '>k141_274'
                 - has_text:
                     text: '>k141_549'
-        test_minigut:
-          Mock5:
+        Mock5:
+          elements:
             '001':
               asserts:
                 - has_text:
@@ -139,7 +139,7 @@
             '0':
               asserts:
                 - has_text:
-                    text: '>k141_2557'
+                    text: '>k141_2466'
                 - has_text:
                     text: 'len=1277'
         Mock5:
@@ -172,20 +172,20 @@
       element_tests:
         Mock4:
           elements:
-            0.fa:
+            405.fa:
               asserts:
                 - has_text:
-                    text: '>k141_1005'
+                    text: '>k141_1663'
                 - has_text:
-                    text: '>k141_1927'
+                    text: '>k141_1149'
         Mock5:
           elements:
-            0.fa:
+            25.fa:
               asserts:
                 - has_text:
-                    text: '>k141_7'
+                    text: '>k141_1261'
                 - has_text:
-                    text: '>k141_701'
+                    text: '>k141_563'
     Binette pre quality reports:
       element_tests:
         Mock4:
@@ -319,7 +319,7 @@
             '1':
               asserts:
                 - has_text:
-                    text: '>k141_1646'
+                    text: '>kk141_1375'
                 - has_text:
                     text: '>k141_2194'
         Mock5:
@@ -340,8 +340,8 @@
                     text: '>k141_274'
                 - has_text:
                     text: '>k141_549'
-        test_minigut:
-          Mock5:
+        Mock5:
+          elements:
             '001':
               asserts:
                 - has_text:
@@ -355,7 +355,7 @@
             '0':
               asserts:
                 - has_text:
-                    text: '>k141_2557'
+                    text: '>k141_2466'
                 - has_text:
                     text: 'len=1277'
         Mock5:
@@ -370,20 +370,20 @@
       element_tests:
         Mock4:
           elements:
-            CONCOCT_10:
+            SemiBin_SemiBin_0:
               asserts:
                 - has_text:
-                    text: '>k141_274'
+                    text: '>k141_1375'
                 - has_text:
-                    text: '>k141_1129'
+                    text: '>k141_1925'
         Mock5:
           elements:
-            CONCOCT_56:
+            CONCOCT_34:
               asserts:
                 - has_text:
                     text: '>k141_289'
                 - has_text:
-                    text: '>k141_701'
+                    text: '>k141_1129'
     DAS Tool summary:
       element_tests:
         Mock4:
@@ -401,7 +401,7 @@
         Mock4:
           asserts:
             - has_n_lines:
-                n: 634
+                n: 201
                 delta: 20
         Mock5:
           asserts:
