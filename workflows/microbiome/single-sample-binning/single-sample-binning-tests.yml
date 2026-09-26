@@ -1,4 +1,4 @@
-- doc: Test for Single-sample-binning-workflow
+- doc: Test for multi-sample-binning (Binette only)
   job:
     Read:
       class: Collection
@@ -6,117 +6,405 @@
       elements:
       - class: Collection
         type: paired
-        identifier: ERR486835
+        identifier: Mock1
         elements:
         - class: File
           identifier: forward
-          location: https://zenodo.org/records/22922544/files/ERR486835_forward.fastqsanger.gz
+          location: https://zenodo.org/records/22982485/files/Mock1_R1.fastq.gz
         - class: File
           identifier: reverse
-          location: https://zenodo.org/records/22922544/files/ERR486835_reverse.fastqsanger.gz
+          location: https://zenodo.org/records/22982485/files/Mock1_R2.fastq.gz
       - class: Collection
         type: paired
-        identifier: test_minigut
+        identifier: Mock2
         elements:
         - class: File
           identifier: forward
-          location: https://zenodo.org/records/22922544/files/test_minigut_forward.fastqsanger.gz
+          location: https://zenodo.org/records/22982485/files/Mock2_R1.fastq.gz
         - class: File
           identifier: reverse
-          location: https://zenodo.org/records/22922544/files/test_minigut_reverse.fastqsanger.gz
+          location: https://zenodo.org/records/22982485/files/Mock2_R2.fastq.gz
+      - class: Collection
+        type: paired
+        identifier: Mock3
+        elements:
+        - class: File
+          identifier: forward
+          location: https://zenodo.org/records/22982485/files/Mock3_R1.fastq.gz
+        - class: File
+          identifier: reverse
+          location: https://zenodo.org/records/22982485/files/Mock3_R2.fastq.gz
+      - class: Collection
+        type: paired
+        identifier: Mock4
+        elements:
+        - class: File
+          identifier: forward
+          location: https://zenodo.org/records/22982485/files/Mock4_R1.fastq.gz
+        - class: File
+          identifier: reverse
+          location: https://zenodo.org/records/22982485/files/Mock4_R2.fastq.gz
+      - class: Collection
+        type: paired
+        identifier: Mock5
+        elements:
+        - class: File
+          identifier: forward
+          location: https://zenodo.org/records/22982485/files/Mock5_R1.fastq.gz
+        - class: File
+          identifier: reverse
+          location: https://zenodo.org/records/22982485/files/Mock5_R2.fastq.gz
     Assemblies:
       class: Collection
       collection_type: list
       elements:
       - class: File
-        identifier: ERR486835
-        location: https://zenodo.org/records/22922544/files/Assemblies_ERR486835.fasta
+        identifier: Mock1
+        location: https://zenodo.org/records/22982485/files/Mock1.fasta
       - class: File
-        identifier: test_minigut
-        location: https://zenodo.org/records/22922544/files/Assemblies_test_minigut.fasta
-    Run COMEBin: false
-    Read length (CONCOCT): '100'
+        identifier: Mock2
+        location: https://zenodo.org/records/22982485/files/Mock2.fasta
+      - class: File
+        identifier: Mock3
+        location: https://zenodo.org/records/22982485/files/Mock3.fasta
+      - class: File
+        identifier: Mock4
+        location: https://zenodo.org/records/22982485/files/Mock4.fasta
+      - class: File
+        identifier: Mock5
+        location: https://zenodo.org/records/22982485/files/Mock5.fasta
+    Run COMEBin: true
+    Read length (CONCOCT): 100
     Bin refirment tool: Binette
+    CheckM2 Database: 1.0.2
   outputs:
     SemiBin bins:
       element_tests:
-        ERR486835:
+        Mock4:
           elements:
             SemiBin_0:
               asserts:
                 - has_text:
-                    text: '>k141_37'
+                    text: '>k141_1375'
                 - has_text:
-                    text: '>k141_56'
-        test_minigut:
+                    text: '>k141_279'
+        Mock5:
           elements:
             SemiBin_0:
               asserts:
                 - has_text:
-                    text: '>k141_28'
+                    text: '>k141_1121'
                 - has_text:
-                    text: '>k141_56'
+                    text: '>k141_422'
     MetaBAT2 bins:
       element_tests:
-        ERR486835:
+        Mock4:
           elements:
             '1':
               asserts:
                 - has_text:
-                    text: '>k141_5'
+                    text: '>k141_1646'
                 - has_text:
-                    text: 'sample_depths=187.5'
-        test_minigut:
+                    text: '>k141_2194'
+        Mock5:
           elements:
             '1':
               asserts:
                 - has_text:
-                    text: '>k141_136'
+                    text: '>k141_287'
                 - has_text:
-                    text: '>k141_190'
+                    text: '>k141_1121'
     MaxBin2 bins:
       element_tests:
-        ERR486835:
+        Mock4:
           elements:
             '001':
               asserts:
                 - has_text:
-                    text: '>k141_80'
+                    text: '>k141_274'
                 - has_text:
-                    text: '>k141_5'
+                    text: '>k141_549'
         test_minigut:
-          elements:
+          Mock5:
             '001':
               asserts:
                 - has_text:
-                    text: '>k141_28'
+                    text: '>k141_282'
                 - has_text:
-                    text: '>k141_136'
+                    text: '>k141_1261'
     CONCOCT bins:
       element_tests:
-        ERR486835:
+        Mock4:
           elements:
             '0':
               asserts:
                 - has_text:
-                    text: '>k141_69'
+                    text: '>k141_2557'
                 - has_text:
-                    text: 'len=1270'
-        test_minigut:
+                    text: 'len=1277'
+        Mock5:
           elements:
             '0':
               asserts:
                 - has_text:
-                    text: '>k141_256'
+                    text: '>k141_287'
                 - has_text:
-                    text: 'len=1508'
+                    text: '>k141_1095'
     Binette bins:
       element_tests:
-        ERR486835:
+        Mock4:
           elements:
             binette_bin1:
               asserts:
                 - has_text:
-                    text: '>k141_37'
+                    text: '>k141_2466'
                 - has_text:
-                    text: '>k141_56'
+                    text: '>k141_1375'
+        Mock5:
+          elements:
+            binette_bin1:
+              asserts:
+                - has_text:
+                    text: '>k141_7'
+                - has_text:
+                    text: '>k141_701'
+    COMEBin bins:
+      element_tests:
+        Mock4:
+          elements:
+            0.fa:
+              asserts:
+                - has_text:
+                    text: '>k141_1005'
+                - has_text:
+                    text: '>k141_1927'
+        Mock5:
+          elements:
+            0.fa:
+              asserts:
+                - has_text:
+                    text: '>k141_7'
+                - has_text:
+                    text: '>k141_701'
+    Binette pre quality reports:
+      element_tests:
+        Mock4:
+          elements:
+            input_bins_1.bin_table_0:
+              asserts:
+                - has_n_lines:
+                    n: 18
+                    delta: 2
+        Mock5:
+          elements:
+            input_bins_1.bin_table_0:
+              asserts:
+                - has_n_lines:
+                    n: 64
+                    delta: 2
+    Binette post quality reports:
+      element_tests:
+        Mock4:
+          asserts:
+            - has_n_lines:
+                n: 4
+                delta: 1
+        Mock5:
+          asserts:
+            - has_n_lines:
+                n: 5
+                delta: 1
+- doc: Test for multi-sample-binning (DAS Tool only)
+  job:
+    Read:
+      class: Collection
+      collection_type: list:paired
+      elements:
+      - class: Collection
+        type: paired
+        identifier: Mock1
+        elements:
+        - class: File
+          identifier: forward
+          location: https://zenodo.org/records/22982485/files/Mock1_R1.fastq.gz
+        - class: File
+          identifier: reverse
+          location: https://zenodo.org/records/22982485/files/Mock1_R2.fastq.gz
+      - class: Collection
+        type: paired
+        identifier: Mock2
+        elements:
+        - class: File
+          identifier: forward
+          location: https://zenodo.org/records/22982485/files/Mock2_R1.fastq.gz
+        - class: File
+          identifier: reverse
+          location: https://zenodo.org/records/22982485/files/Mock2_R2.fastq.gz
+      - class: Collection
+        type: paired
+        identifier: Mock3
+        elements:
+        - class: File
+          identifier: forward
+          location: https://zenodo.org/records/22982485/files/Mock3_R1.fastq.gz
+        - class: File
+          identifier: reverse
+          location: https://zenodo.org/records/22982485/files/Mock3_R2.fastq.gz
+      - class: Collection
+        type: paired
+        identifier: Mock4
+        elements:
+        - class: File
+          identifier: forward
+          location: https://zenodo.org/records/22982485/files/Mock4_R1.fastq.gz
+        - class: File
+          identifier: reverse
+          location: https://zenodo.org/records/22982485/files/Mock4_R2.fastq.gz
+      - class: Collection
+        type: paired
+        identifier: Mock5
+        elements:
+        - class: File
+          identifier: forward
+          location: https://zenodo.org/records/22982485/files/Mock5_R1.fastq.gz
+        - class: File
+          identifier: reverse
+          location: https://zenodo.org/records/22982485/files/Mock5_R2.fastq.gz
+    Assemblies:
+      class: Collection
+      collection_type: list
+      elements:
+      - class: File
+        identifier: Mock1
+        location: https://zenodo.org/records/22982485/files/Mock1.fasta
+      - class: File
+        identifier: Mock2
+        location: https://zenodo.org/records/22982485/files/Mock2.fasta
+      - class: File
+        identifier: Mock3
+        location: https://zenodo.org/records/22982485/files/Mock3.fasta
+      - class: File
+        identifier: Mock4
+        location: https://zenodo.org/records/22982485/files/Mock4.fasta
+      - class: File
+        identifier: Mock5
+        location: https://zenodo.org/records/22982485/files/Mock5.fasta
+    Run COMEBin: false
+    Read length (CONCOCT): 100
+    Bin refirment tool: DAS Tool
+    CheckM2 Database: 1.0.2
+  outputs:
+    SemiBin bins:
+      element_tests:
+        Mock4:
+          elements:
+            SemiBin_0:
+              asserts:
+                - has_text:
+                    text: '>k141_1375'
+                - has_text:
+                    text: '>k141_279'
+        Mock5:
+          elements:
+            SemiBin_0:
+              asserts:
+                - has_text:
+                    text: '>k141_1121'
+                - has_text:
+                    text: '>k141_422'
+    MetaBAT2 bins:
+      element_tests:
+        Mock4:
+          elements:
+            '1':
+              asserts:
+                - has_text:
+                    text: '>k141_1646'
+                - has_text:
+                    text: '>k141_2194'
+        Mock5:
+          elements:
+            '1':
+              asserts:
+                - has_text:
+                    text: '>k141_287'
+                - has_text:
+                    text: '>k141_1121'
+    MaxBin2 bins:
+      element_tests:
+        Mock4:
+          elements:
+            '001':
+              asserts:
+                - has_text:
+                    text: '>k141_274'
+                - has_text:
+                    text: '>k141_549'
+        test_minigut:
+          Mock5:
+            '001':
+              asserts:
+                - has_text:
+                    text: '>k141_282'
+                - has_text:
+                    text: '>k141_1261'
+    CONCOCT bins:
+      element_tests:
+        Mock4:
+          elements:
+            '0':
+              asserts:
+                - has_text:
+                    text: '>k141_2557'
+                - has_text:
+                    text: 'len=1277'
+        Mock5:
+          elements:
+            '0':
+              asserts:
+                - has_text:
+                    text: '>k141_287'
+                - has_text:
+                    text: '>k141_1095'
+    DAS Tool bins:
+      element_tests:
+        Mock4:
+          elements:
+            CONCOCT_10:
+              asserts:
+                - has_text:
+                    text: '>k141_274'
+                - has_text:
+                    text: '>k141_1129'
+        Mock5:
+          elements:
+            CONCOCT_56:
+              asserts:
+                - has_text:
+                    text: '>k141_289'
+                - has_text:
+                    text: '>k141_701'
+    DAS Tool summary:
+      element_tests:
+        Mock4:
+          asserts:
+            - has_n_lines:
+                n: 4
+                delta: 1
+        Mock5:
+          asserts:
+            - has_n_lines:
+                n: 5
+                delta: 1
+    DAS Tool contigs2bin report:
+      element_tests:
+        Mock4:
+          asserts:
+            - has_n_lines:
+                n: 634
+                delta: 20
+        Mock5:
+          asserts:
+            - has_n_lines:
+                n: 562
+                delta: 20

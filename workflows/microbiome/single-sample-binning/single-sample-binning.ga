@@ -298,7 +298,7 @@
                     "name": "input_param_type"
                 }
             ],
-            "label": "Run DAS Tool?",
+            "label": "DAS Tool?",
             "name": "Map parameter value",
             "outputs": [
                 {
@@ -1198,10 +1198,6 @@
                 {
                     "description": "runtime parameter for tool DAS Tool",
                     "name": "adv"
-                },
-                {
-                    "description": "runtime parameter for tool DAS Tool",
-                    "name": "contigs"
                 }
             ],
             "label": "DAS Tool",
@@ -1258,7 +1254,7 @@
                 "owner": "iuc",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"adv\": {\"search_engine\": \"diamond\", \"proteins\": {\"__class__\": \"RuntimeValue\"}, \"score_threshold\": \"0.5\", \"duplicate_penalty\": \"0.6\", \"megabin_penalty\": \"0.5\", \"max_iter_post_threshold\": \"10\"}, \"binning\": [{\"__index__\": 0, \"bins\": {\"__class__\": \"RuntimeValue\"}, \"labels\": \"CONCOCT\"}, {\"__index__\": 1, \"bins\": {\"__class__\": \"RuntimeValue\"}, \"labels\": \"COMEBin\"}, {\"__index__\": 2, \"bins\": {\"__class__\": \"RuntimeValue\"}, \"labels\": \"MetaBAT2\"}, {\"__index__\": 3, \"bins\": {\"__class__\": \"RuntimeValue\"}, \"labels\": \"MaxBin2\"}, {\"__index__\": 4, \"bins\": {\"__class__\": \"RuntimeValue\"}, \"labels\": \"SemiBin\"}], \"contigs\": {\"__class__\": \"RuntimeValue\"}, \"output\": {\"proteins\": false, \"write_bin_evals\": false, \"write_bins\": {\"write_bins\": \"--write_bins\", \"__current_case__\": 0, \"write_unbinned\": false}, \"debug\": false}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_state": "{\"adv\": {\"search_engine\": \"diamond\", \"proteins\": {\"__class__\": \"RuntimeValue\"}, \"score_threshold\": \"0.5\", \"duplicate_penalty\": \"0.6\", \"megabin_penalty\": \"0.5\", \"max_iter_post_threshold\": \"10\"}, \"binning\": [{\"__index__\": 0, \"bins\": {\"__class__\": \"ConnectedValue\"}, \"labels\": \"CONCOCT\"}, {\"__index__\": 1, \"bins\": {\"__class__\": \"ConnectedValue\"}, \"labels\": \"COMEBin\"}, {\"__index__\": 2, \"bins\": {\"__class__\": \"ConnectedValue\"}, \"labels\": \"MetaBAT2\"}, {\"__index__\": 3, \"bins\": {\"__class__\": \"ConnectedValue\"}, \"labels\": \"MaxBin2\"}, {\"__index__\": 4, \"bins\": {\"__class__\": \"ConnectedValue\"}, \"labels\": \"SemiBin\"}], \"contigs\": {\"__class__\": \"ConnectedValue\"}, \"output\": {\"proteins\": false, \"write_bin_evals\": false, \"write_bins\": {\"write_bins\": \"--write_bins\", \"__current_case__\": 0, \"write_unbinned\": false}, \"debug\": false}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
             "tool_uuid": null,
             "tool_version": "1.1.7+galaxy1",
             "type": "tool",
@@ -1266,9 +1262,9 @@
             "when": "$(inputs.when)",
             "workflow_outputs": [
                 {
-                    "label": "DAS Tool contigs2bin report",
-                    "output_name": "contigs2bin",
-                    "uuid": "4c7f9402-27d6-4ad6-8522-7b171f5e9f18"
+                    "label": "DAS Tool summary",
+                    "output_name": "summary",
+                    "uuid": "557f3d88-6654-43c2-8e1a-ccc85b55723b"
                 },
                 {
                     "label": "DAS Tool bins",
@@ -1276,9 +1272,9 @@
                     "uuid": "b6a98bd6-3063-4031-8f95-17c4cd0d5e4b"
                 },
                 {
-                    "label": "DAS Tool summary",
-                    "output_name": "summary",
-                    "uuid": "557f3d88-6654-43c2-8e1a-ccc85b55723b"
+                    "label": "DAS Tool contigs2bin report",
+                    "output_name": "contigs2bin",
+                    "uuid": "4c7f9402-27d6-4ad6-8522-7b171f5e9f18"
                 }
             ]
         },
@@ -1362,14 +1358,6 @@
             "inputs": [
                 {
                     "description": "runtime parameter for tool Binette",
-                    "name": "contig2bin_tables"
-                },
-                {
-                    "description": "runtime parameter for tool Binette",
-                    "name": "contigs"
-                },
-                {
-                    "description": "runtime parameter for tool Binette",
                     "name": "database_type"
                 },
                 {
@@ -1405,9 +1393,16 @@
                     "action_type": "TagDatasetAction",
                     "output_name": "bins"
                 },
+                "TagDatasetActionfinal": {
+                    "action_arguments": {
+                        "tags": "binette-post-quality-reports"
+                    },
+                    "action_type": "TagDatasetAction",
+                    "output_name": "final"
+                },
                 "TagDatasetActionquality": {
                     "action_arguments": {
-                        "tags": "binette-quality-reports"
+                        "tags": "binette-pre-quality-reports"
                     },
                     "action_type": "TagDatasetAction",
                     "output_name": "quality"
@@ -1420,7 +1415,7 @@
                 "owner": "iuc",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"contamination_weight\": \"2\", \"contig2bin_tables\": {\"__class__\": \"RuntimeValue\"}, \"contigs\": {\"__class__\": \"RuntimeValue\"}, \"database_type\": {\"is_select\": \"cached\", \"__current_case__\": 1, \"datamanager\": {\"__class__\": \"ConnectedValue\"}}, \"min_completeness\": \"40\", \"proteins\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
+            "tool_state": "{\"contamination_weight\": \"2\", \"contig2bin_tables\": {\"__class__\": \"ConnectedValue\"}, \"contigs\": {\"__class__\": \"ConnectedValue\"}, \"database_type\": {\"is_select\": \"cached\", \"__current_case__\": 1, \"datamanager\": {\"__class__\": \"ConnectedValue\"}}, \"min_completeness\": \"40\", \"proteins\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": 0, \"__rerun_remap_job_id__\": null}",
             "tool_uuid": null,
             "tool_version": "1.2.1+galaxy0",
             "type": "tool",
@@ -1428,19 +1423,24 @@
             "when": "$(inputs.when)",
             "workflow_outputs": [
                 {
+                    "label": "Binette prebinette quality reports",
+                    "output_name": "quality",
+                    "uuid": "eacc6f73-7d8f-477a-9027-3632aaa7ee27"
+                },
+                {
                     "label": "Binette bins",
                     "output_name": "bins",
                     "uuid": "f349ecdf-2aef-41b9-9a6f-9985450fb93b"
                 },
                 {
-                    "label": "Binette quality reports",
-                    "output_name": "quality",
-                    "uuid": "1725da51-e5b1-41bc-987e-70d04d9c8d9e"
+                    "label": "Binette post quality reports",
+                    "output_name": "final",
+                    "uuid": "37af6411-26ee-4ded-b7e3-b30be7ab147b"
                 }
             ]
         }
     },
     "tags": [],
-    "uuid": "eb906002-ccfe-438b-aa5f-ff1dc791bb86",
+    "uuid": "e00f4aac-2183-405e-80b6-b476bf3934f7",
     "version": 1
 }
