@@ -85,10 +85,10 @@
             "inputs": [
                 {
                     "description": "COMEBin might use a lot of resources, so it is optional. \n\nIt is recommended to use it!",
-                    "name": "Run COMEBin"
+                    "name": "Run COMEBin?"
                 }
             ],
-            "label": "Run COMEBin",
+            "label": "Run COMEBin?",
             "name": "Input parameter",
             "outputs": [],
             "position": {
